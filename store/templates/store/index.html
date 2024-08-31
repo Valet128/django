@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+<!-- @*SLIDER*@ -->
+
+    <div class="slider">
+        <div class="container">
+            <div class="image-slider swiper-container">
+                <div class="image-slider__wrapper swiper-wrapper">
+                    {% for slide in slides %}
+                    <div class="image-slider__slide swiper-slide">
+                        <div class="image-slider__image">
+                            <img src="{% get_media_prefix %}{{ slide.image }}" alt="Картинка"/>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </div>
+<!-- @*PRODUCT_ITEMS*@ -->
+  
+
+<div id="courses"></div>
+    <div class="product">
+        <div class="container">
+            <div class="product__row" id="row">
+            {% if product|length <= 3 %}
+                {% for product in products %}
+                        <div class="product__column">
+                            <div class="product__item">
+                                <div class="product__img">
+                                    <img src="{% get_media_prefix %}{{ product.image }}"/>
+                                </div>
+                                <div class="product__title">
+                                    <p>{{ product.name }}</p>
+                                </div>
+                                <div class="product__price">
+                                    <p>{{ product.price }} ₽</p>
+                                </div>
+                                    
+                                <div class="product__date">
+                                    {% if product.interaction.name ==  "Запись" %}
+                                    
+                                        <p></p>
+                                    
+                                    {% else %}
+                                    
+                                        <p>{{ product.date }}</p>
+                                    {% endif %}
+                                </div>
+                                    
+                                <div class="product-btn"> 
+                                    <div class="product-btn__row"> 
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="{{ product.get_absolute_url }}">Подробнее...</a>
+                                        </div>
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="{% url 'placing_an_order' product.id %}">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                {% endfor %}
+            {% else %}
+                
+                {% for product in products %}
+                                <div class="product__column">
+                            <div class="product__item">
+                                <div class="product__img">
+                                    <img src="{% get_media_prefix %}{{ product.image }}"/>
+                                </div>
+                                <div class="product__title">
+                                    <p>{{ product.name }}</p>
+                                </div>
+                                <div class="product__price">
+                                    <p>{{ product.price }} ₽</p>
+                                </div>
+                                <div class="product__date">
+                                    {% if product.interaction.name ==  "Запись" %}
+                                        <p></p>
+                                    {% else %}
+                                        <p>{{ product.date }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="product-btn"> 
+                                    <div class="product-btn__row"> 
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="{{ product.get_absolute_url }}">Подробнее...</a>
+                                        </div>
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="{% url 'placing_an_order' product.id %}">Купить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                
+                {% endfor %}
+            
+            </div>
+            <div class="product-more">
+                <a class="btn__link" id="product-more">Еще</a>
+            </div>
+            {% endif %}
+        </div> 
+    </div> 
+   
+
+    <!-- @*DESCRIPTION*@ -->
+
+    <div id="about"></div>
+        <div class="description">
+            <div class="container">
+                <div class="description__body">
+                <div class="description__title title">Авторская Школа Анны Шведовой</div>
+                    <div class="description-header">
+                        <div class="description-header__row">
+                            <div class="description-header__column">
+                            <div class="description-header__img">
+                                <img src="{% static 'store/images/icons/checkMark.png' %}" alt="">
+                            </div>
+                            <div class="description-header__text">
+                                Мир во мне
+                                Понимание себя и своих "хочу"
+                                Умение чувствовать жизнь
+                            </div>
+                            </div>
+                             <div class="description-header__column">
+                            <div class="description-header__img">
+                                <img src="{% static 'store/images/icons/checkMark.png' %}" alt="">
+                            </div>
+                            <div class="description-header__text">
+                                Здоровье
+                                Осознанное питание и 
+                                энергия жизни
+                            </div>
+                            </div>
+                             <div class="description-header__column">
+                            <div class="description-header__img">
+                                <img src="{% static 'store/images/icons/checkMark.png' %}" alt="">
+                            </div>
+                            <div class="description-header__text">
+                                    Воплощение желаний и мечт
+                                    Творческая визуализация
+                            </div>
+                            </div>
+                             <div class="description-header__column">
+                            <div class="description-header__img">
+                                <img src="{% static 'store/images/icons/checkMark.png' %}" alt="">
+                            </div>
+                            <div class="description-header__text">
+                                Изобильное мышление
+                                Финансовое благополучие
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="description__row">
+                        <div class="description__column">
+                            <p> Анна Шведова - врач-психотерапевт.
+                            Более 30 лет успешно занимается вопросами здорового образа жизни,
+                            питания и психологии. Автор уникальных тренингов и курсов.
+                            Ценнейшие и глубокие знания доносит легко и просто. 
+                            </p>
+                        </div>
+                        <div class="description__column" >
+                            <img src="{% static 'store/images/description/anna.jpg' %}"/>
+                        </div>
+                    </div>
+                    <div class="description__row">
+                        <div class="description__column" >
+                            <img src="{% static 'store/images/description/lusia.jpg' %}" />
+                        </div>
+                        <div class="description__column">
+                            <p> Людмила Ушакова - директор Авторской Школы Анны Шведовой.
+                                Врач-терапевт. Организатор тренингов и курсов.   
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   
+<!-- @*FEEDBACKS*@ -->
+  <div id="feedbacks"></div>
+ <div class="feedback">
+        <div class="container">
+            <div class="description__title title">Отзывы</div>
+            <div class="image-feedback swiper-container">
+                <div class="image-feedback__wrapper swiper-wrapper">
+                    {% for feedback in feedbacks %}
+                    <div class="image-feedback__slide swiper-slide">
+                        <div class="image-feedback__image">
+                            <img src="{% get_media_prefix %}{{ feedback.image }}" alt="Картинка"/>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <div class="swiper-pagination"></div>
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </div>
+
+{% endblock %}

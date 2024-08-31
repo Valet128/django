@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Оформление заказа {% endblock %}
+
+{% block content %}
+<div class="form">
+    <div class="container">
+    <div class="form__title">Оформление заказа</div>
+    <!-- <div class="form__message">ERROR MESSAGE</div> -->
+    <div class="form__label">Отправляя данную форму, вы соглашаетесь с политикой конфиденциальности - <a href="/confidence">Политика конфиденциальности</a></div>
+        <div class="form__body">
+   
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form__item">{{ form.non_field_errors}}</div>
+            <div class="form__item">
+                {{ field.label }}<br />
+                {{ field }} {{field.errors}}
+                </div>
+            {% endfor %}
+            
+            <div class="form__item">
+            <input class="btn__input" type="submit" value="Оплатить"/>
+            </div>
+        </form>
+    
+        </div>
+    </div>
+    
+    </div>
+{% endblock %}

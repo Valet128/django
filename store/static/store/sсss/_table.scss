@@ -1,0 +1,138 @@
+﻿@import "_variables.scss";
+
+.table{}
+.table__title{
+    font-size: 24px;
+    font-weight: 700;
+}
+.table__nocontent {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+.table-video__pack{
+    
+}
+.pack__title {
+    margin: 10px 0;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.pack__list.active {
+    display: block;
+}
+.pack__list {
+    margin: 10px 0;
+    display: none;
+}
+.pack-list__title {
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.pack-list__content.active {
+    display: block;
+}
+.pack-list__content{
+    display: none;
+    video{
+        width: 240px;
+        height: 180px;
+    }
+}
+.table__body{}
+.table__row {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 10px;
+}
+.table__column {
+   
+    margin: 10px 0;
+}
+.table__item{}
+.table-item__row {
+    border: 1px solid #525252;
+    display: flex;
+}
+.table-item__column {
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+    height: 100px;
+    width: auto;
+    overflow: hidden;
+}
+.table-item__item {
+    width: auto;
+    height: 100px;
+
+    img {
+        width: 100px;
+        height: 100px;
+    }
+}
+.table-video__column {
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+    height: 180px;
+    width: auto;
+    overflow: hidden;
+}
+
+.table-video__item {
+    width: auto;
+    height: 180px;
+
+    video {
+        width: 300px;
+        height: 180px;
+    }
+}
+.video{
+    width: 500px;
+    height: 300px;
+}
+.table-item__column:nth-child(1) {
+    width: 150px;
+
+    .table-item__item {
+        width: 150px;
+    }
+}
+.table-item__column:nth-child(2) {
+    width: 250px;
+
+    .table-item__item {
+        width: 250px;
+    }
+}
+
+
+.table-item__btn a{
+    margin: 10px 0;
+}
+//MEDIA
+@media(max-width: 767px) {
+    .table-item__row {
+        flex-direction: column;
+        
+    }
+    .table-item__column {
+        height: auto;
+    }
+    .table-item__item {
+        width: auto;
+        height: auto;
+        margin: 5px;
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}

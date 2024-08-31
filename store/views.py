@@ -1,0 +1,98 @@
+from django.shortcuts import redirect
+from .models import Product, Slide, Feedback
+from .forms import PlacingAnOrderForm
+from yookassa import Configuration, Payment
+from django.views.generic import TemplateView, DetailView, FormView
+from .utils import DataMixin
+import uuid
+from shvedovaav.settings import SHOP_ID, API_SECRET
+
+
+
+class StoreHome(DataMixin, TemplateView):
+    products = Product.objects.all()
+    slides = Slide.objects.all()
+    feedbacks = Feedback.objects.all()
+    template_name = 'store/index.html'
+    title = "АШАШ"
+
+class StoreProduct(DataMixin, DetailView):
+    model = Product
+    template_name = "store/product.html"
+    pk_url_kwarg = 'id'
+    context_object_name = 'product'
+    allow_empty = False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return self.get_mixin_context(context, title=context['product'].name)
+
+
+class StorePlacingAnOrder(DataMixin, FormView, DetailView):
+    form_class = PlacingAnOrderForm
+    template_name = "store/placing_an_order.html"
+    model = Product
+    pk_url_kwarg = 'id'
+    context_object_name = 'product'
+    title = "Оформление заказа"
+    
+    Configuration.configure(SHOP_ID, API_SECRET)
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     self.form_class.declared_fields['amount'].initial = context['product'].price
+    #     self.form_class.declared_fields['product_name'].initial = context['product'].name
+    #     return self.get_mixin_context(context)
+
+    def form_valid(self, form):
+        idempotence_key = str(uuid.uuid4())
+        payment = Payment.create(
+                    {
+                    "amount": {
+                        "value": form.data['amount'],
+                        "currency": "RUB",
+                    },
+                    "confirmation": {
+                        "type": "redirect",
+                        "return_url": "https://shvedovaav.ru/thank_you",
+                    },
+                    "receipt": {
+                        "customer": {
+                            "email": form.data['customer_email'],
+                            "phone": form.data['customer_phone'],
+                        },
+                        "items": [ 
+                            {
+                                "amount": {
+                                    "value": form.data['amount'],
+                                    "currency":"RUB",
+                                },
+                                
+                                "quantity": 1,
+                                "description": form.data['product_name'],
+                                "vat_code": 1
+                            },
+                            ]
+                    },
+                    "capture": True,
+                    },
+                    idempotence_key)
+        confirmation_url = payment.confirmation.confirmation_url
+        return redirect(confirmation_url)
+
+
+class StoreAccord(DataMixin, TemplateView):
+    title = "Согласие с рассылкой",
+    template_name = 'store/accord.html'
+
+class StoreDenial(DataMixin, TemplateView):
+    title = "Отказ от ответственности",
+    template_name = 'store/denial.html'
+
+class StoreConfidence(DataMixin, TemplateView):
+    title = "Политика конфиденциальности",
+    template_name = 'store/confidence.html'
+
+class StoreTermOfUse(DataMixin, TemplateView):
+    title = "Пользовательское соглашение",
+    template_name = 'store/terms_of_use.html'

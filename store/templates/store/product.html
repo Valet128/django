@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block content %}
+<div class="product-description">
+    <div class="container">
+    <div class="product-description__body">
+        <div class="product-description__row">
+        <div class="product-description__img-block">
+            <img src="{% get_media_prefix %}{{ product.image }}"/>
+        </div>
+         <div class="product-description__text-block">
+                <div class="product-description__title">
+                <p>{{ product.name }}</p>
+                </div>
+                 
+                <div class="product-description__description">
+                <pre>{{ product.description }}</pre>
+                </div>
+                 <div class="product-description__date">
+                    {% if product.interaction.name ==  "Запись" %}
+                    <p></p>
+                    {% else %}
+                    <p>{{ product.date }}</p>
+                    {% endif %}
+                        </div>
+               <div class="product-description__price-btn">
+                <div class="product-description__price">
+                     <p>{{ product.price }} ₽</p>
+                </div> 
+                <div class="product-description__btn">
+                            <a href="{% url 'placing_an_order' product.id %}">
+                                 <input class="btn__input" type="button"  value="Купить"/>
+                            </a>
+                </div>
+                </div>
+         </div>
+         </div>
+        </div>
+            
+        </div>
+        </div>
+{% endblock %}
