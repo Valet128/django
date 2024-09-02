@@ -18,9 +18,9 @@ SHOP_ID = os.getenv('SHOP_ID')
 API_SECRET = os.getenv('API_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['shvedovaav.ru', 'www.shvedovaav.ru']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,12 +74,23 @@ WSGI_APPLICATION = 'shvedovaav.wsgi.application'
 
 DATABASES = {
    
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'u2805287_shvedovaav_db',
+    #     'USER': os.getenv('USER_DB'),
+    #     'PASSWORD': os.getenv('PASSWORD_DB'),
+    #     'HOST': 'localhost',
+    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u2805287_shvedovaav_db',
-        'USER': os.getenv('USER_DB'),
-        'PASSWORD': os.getenv('PASSWORD_DB'),
+        'NAME': 'my_db',
+        'USER': os.getenv('USER_DB_TEST'),
+        'PASSWORD': os.getenv('PASSWORD_DB_TEST'),
         'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 
 }
