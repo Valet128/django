@@ -2,18 +2,19 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"  />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{% static 'store/images/icons/icon.png' %}" type="image/png" />
     <script src="{% static 'store/jquery/jquery-3.6.0.min.js' %}"></script>
 
     <script src="{% static 'store/jquery/jquery.validate.min.js' %}"></script>
     <script src="{% static 'store/jquery/jquery.validate.unobtrusive.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'store/bootstrap_svg/bootstrap-icons.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'store/swipe/swiper-bundle.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'store/bootstrap_svg/bootstrap-icons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'store/swipe/swiper-bundle.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}" />
     <script src="{% static 'store/swipe/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'store/js/style.js' %}"></script>
     <title>{% block title %} {% endblock %}</title>
@@ -22,43 +23,35 @@
 <body>
 
     <div class="wrapper">
-            <div class="header">
-                <div class="container">
-                    <div class="header__body">
-                        <div class="header__burger">
-                            <span></span>
-                        </div>
-                        <div class="header__menu">
-                            <ul class="header__list">
-                                <li><a class="header__link" href="/">АШАШ</a></li>
-                                <li><a class="header__link" href="/#courses">КУРСЫ</a></li>
-                                <li><a class="header__link" href="/#feedbacks">ОТЗЫВЫ</a></li>
-                                <li><a class="header__link" href="/#about">О НАС</a></li>
-                            </ul>
-                        </div>
-                         <div class="header__phone"><img src="{% static 'store/images/icons/phone.png' %}" alt="">8-909-65-258-65</div>
-                        <div class="header__btn">
-                                
-                                <!-- <a asp-action="profile" asp-controller="profile" class="btn__link">Профиль</a>
-                                <a class="btn__link btn__link_exit">Выйти</a>
-                                 <div class="modal-wrap">
-                                <div class="modal-window">
-                                    <p>Вы действительно хотите выйти?</p>
-                                <a asp-action="logout" asp-controller="account" class="btn__link btn__link_confirm">Выйти</a>
-                                <a class="btn__link btn__link_cancel">Отмена</a>
-                                </div>
-                                </div> -->
-                           
-                                <a asp-action="login" asp-controller="account" class="btn__link">Войти</a>
-                                <a asp-action="registration" asp-controller="account" class="btn__link">Регистрация</a>
-                            
-
-                               
-                        </div>
+        <div class="header">
+            <div class="container">
+                <div class="header__body">
+                    <div class="header__burger">
+                        <span></span>
+                    </div>
+                    <div class="header__menu">
+                        <ul class="header__list">
+                            <li><a class="header__link" href="/">АШАШ</a></li>
+                            <li><a class="header__link" href="/#courses">КУРСЫ</a></li>
+                            <li><a class="header__link" href="/#feedbacks">ОТЗЫВЫ</a></li>
+                            <li><a class="header__link" href="/#about">О НАС</a></li>
+                        </ul>
+                    </div>
+                    <div class="header__phone"><img src="{% static 'store/images/icons/phone.png' %}"
+                            alt="">8-909-65-258-65</div>
+                    <div class="header__btn">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'users:profile' %}" class="btn__link">{{ user.first_name }}</a><span class="btn__link_span">|</span>
+                        <a href="{% url 'users:logout' %}" class="btn__link">Выйти</a>
+                        {% else %}
+                        <a href="{% url 'users:login' %}" class="btn__link">Войти</a><span class="btn__link_span">|</span>
+                        <a href="{% url 'users:register' %}" class="btn__link">Регистрация</a>
+                        {% endif %}
                     </div>
                 </div>
-           </div>
-            
+            </div>
+        </div>
+
         <div class="content">
             {% block content %}
             {% endblock %}
@@ -67,7 +60,7 @@
             <div class="container">
                 <!-- Блок согласие на обработку данных -->
 
-                            <!-- <div class="cookie">
+                <!-- <div class="cookie">
                                 <div class="cookie__body">
                                     <div class="cookie__text">
                                             На сайте используется сбор данных Cookies. 
@@ -76,37 +69,38 @@
                                     </div>
                                 </div>
                             </div> -->
-             
-        
-            <div class="footer__body">
-                <div class="footer__row">
-                    <div class="footer__column">
-                        <a href="https://t.me/shvedovaanna" target="_blank"><img src="{% static 'store/images/icons/telegram.png' %}" alt=""></a>
-                        <a href="https://www.youtube.com/c/АвторскаяШколаАнныШведовой" target="_blank"><img src="{% static 'store/images/icons/youtube.png' %}" alt=""></a>
-                        <p>АШАШ © {{ year }}</p>
-                    </div>
-                   
-                    <div class="footer__column">
-                        <ul>
-                            <li>Контакты</li>
-                            <li>8-909-65-258-65</li>
-                            <li>info@shvedovaav.ru</li>
-                        </ul>
-                    </div>
-                     <div class="footer__column">
-                        <ul>
-                            <li><a href="/accord" >Согласие с рассылкой</a></li>
-                            <li><a href="/confidence" >Политика конфиденциальности</a></li>
-                            <li><a href="/denial" >Отказ от ответсвенности</a></li>
-                            <li><a href="/terms_of_use" >Пользовательское соглашение</a></li>
-                        </ul>
+                <div class="footer__body">
+                    <div class="footer__row">
+                        <div class="footer__column">
+                            <a href="https://t.me/shvedovaanna" target="_blank"><img
+                                    src="{% static 'store/images/icons/telegram.png' %}" alt=""></a>
+                            <a href="https://www.youtube.com/c/АвторскаяШколаАнныШведовой" target="_blank"><img
+                                    src="{% static 'store/images/icons/youtube.png' %}" alt=""></a>
+                            <p>АШАШ © {{ year }}</p>
+                        </div>
+
+                        <div class="footer__column">
+                            <ul>
+                                <li>Контакты</li>
+                                <li>8-909-65-258-65</li>
+                                <li>info@shvedovaav.ru</li>
+                            </ul>
+                        </div>
+                        <div class="footer__column">
+                            <ul>
+                                <li><a href="/accord">Согласие с рассылкой</a></li>
+                                <li><a href="/confidence">Политика конфиденциальности</a></li>
+                                <li><a href="/denial">Отказ от ответсвенности</a></li>
+                                <li><a href="/terms_of_use">Пользовательское соглашение</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
-    
-  
+
+
 </body>
+
 </html>

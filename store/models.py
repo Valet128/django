@@ -39,6 +39,8 @@ class Feedback(models.Model):
     name = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='feedbacks')
 
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=0)
@@ -48,7 +50,7 @@ class Order(models.Model):
     customer_phone = models.CharField(max_length=25)
     product = models.ForeignKey('Product', on_delete=models.PROTECT)
     payment = models.ForeignKey('Payment', on_delete=models.PROTECT)
-
+    
 
 class Payment(models.Model):
     token = models.CharField(max_length=255)

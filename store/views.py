@@ -18,7 +18,6 @@ class StoreHome(DataMixin, TemplateView):
         context['feedbacks'] = Feedback.objects.all()
         return self.get_mixin_context(context)
 
-
 class StoreProduct(DataMixin, DetailView):
     model = Product
     template_name = "store/product.html"
@@ -26,32 +25,24 @@ class StoreProduct(DataMixin, DetailView):
     context_object_name = 'product'
     allow_empty = False
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context, title=context['product'].name)
-
 class StorePlacingAnOrder(DataMixin, FormView, DetailView):
     form_class = PlacingAnOrderForm
     template_name = "store/placing_an_order.html"
-    model = Product
     pk_url_kwarg = 'id'
-    context_object_name = 'product'
     title = "Оформление заказа"
-   
+
     def get_queryset(self):
         product = Product.objects.filter(pk=self.kwargs['id'])
         self.initial['amount'] = product[0].price
         self.initial['product_name'] = product[0].name
         return product
-
-    Configuration.configure(SHOP_ID, API_SECRET)
     
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context)
 
     def form_valid(self, form):
+        Configuration.configure(SHOP_ID, API_SECRET)
         idempotence_key = str(uuid.uuid4())
         payment = Payment.create(
                     {
@@ -87,19 +78,18 @@ class StorePlacingAnOrder(DataMixin, FormView, DetailView):
         confirmation_url = payment.confirmation.confirmation_url
         return redirect(confirmation_url)
 
-
 class StoreAccord(DataMixin, TemplateView):
-    title = "Согласие с рассылкой",
+    title = "Согласие с рассылкой"
     template_name = 'store/accord.html'
 
 class StoreDenial(DataMixin, TemplateView):
-    title = "Отказ от ответственности",
+    title = "Отказ от ответственности"
     template_name = 'store/denial.html'
 
 class StoreConfidence(DataMixin, TemplateView):
-    title = "Политика конфиденциальности",
+    title = "Политика конфиденциальности"
     template_name = 'store/confidence.html'
 
 class StoreTermOfUse(DataMixin, TemplateView):
-    title = "Пользовательское соглашение",
+    title = "Пользовательское соглашение"
     template_name = 'store/terms_of_use.html'
