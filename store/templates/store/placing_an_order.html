@@ -6,7 +6,6 @@
 <div class="form">
     <div class="container">
     <div class="form__title">Оформление заказа</div>
-    <div class="form__label">Отправляя данную форму, вы соглашаетесь с политикой конфиденциальности - <a href="/confidence">Политика конфиденциальности</a></div>
         <div class="form__body">
    
         <form action="" method="post">
@@ -18,6 +17,9 @@
                 {{ field }} {{field.errors}}
                 </div>
             {% endfor %}
+            <p> Я принимаю условия <a href="{% url 'terms_of_use' %}">Пользовательского соглашения</a> 
+                и даю свое согласие АШАШ на обработку моей персональной
+            информации на условиях, опреденных <a href="{% url 'confidence' %}">Политикой конфиденциальности</a> </p>
             
             <div class="form__item">
             <input class="btn__input" type="submit" value="Оплатить"/>

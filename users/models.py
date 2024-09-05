@@ -8,5 +8,6 @@ class User(AbstractUser):
 
     photo = models.ImageField(upload_to=image_path, blank=True, null=True, verbose_name="Фотография")
     phone = models.CharField(max_length=15, blank=True, null=True, verbose_name="Номер телефона")
+    is_accepted = models.BooleanField(verbose_name="Согласие на обработку персональных данных", null=True)
 
     

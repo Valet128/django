@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import LoginUserForm, RegisterUserForm, ProfileUserForm, UserPasswordChangeForm, UserPasswordResetForm, UserPasswordResetConfirmForm
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
+from django.core.mail import EmailMessage
 
 
 class LoginUser(DataMixin, LoginView):
@@ -18,6 +19,20 @@ class RegisterUser(DataMixin, CreateView):
     template_name = 'users/register.html'
     title = "Регистрация"
     success_url = reverse_lazy('users:login')
+    
+    def form_valid(self, form):
+        title_message = 'Регистрация'
+        text_message = f"""{form.cleaned_data['first_name']}, Вы зарегистрировались на сайте shvedovaav.ru!"""
+        email_to = [form.cleaned_data['username']]
+
+        email = EmailMessage(
+            subject=title_message,
+            body=text_message,
+        to=email_to
+        )
+        email.send()
+        return super().form_valid(form)
+
 
 class ProfileUser(LoginRequiredMixin, DataMixin, UpdateView):
     model = get_user_model()
@@ -31,11 +46,13 @@ class ProfileUser(LoginRequiredMixin, DataMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+
 class UserPasswordChange(LoginRequiredMixin, DataMixin, PasswordChangeView):
     form_class =  UserPasswordChangeForm
     success_url = reverse_lazy('users:password_change_done')
     template_name = 'users/password_change_form.html'
     title = 'Смена пароля'
+
 
 class UserPasswordReset(DataMixin, PasswordResetView):
     form_class = UserPasswordResetForm
@@ -43,6 +60,7 @@ class UserPasswordReset(DataMixin, PasswordResetView):
     email_template_name='users/password_reset_email.html'
     success_url=reverse_lazy('users:password_reset_done')
     title = "Сброс пароля"
+
 
 class UserPasswordResetConfirm(DataMixin, PasswordResetConfirmView):
     form_class = UserPasswordResetConfirmForm

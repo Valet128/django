@@ -18,10 +18,11 @@ class RegisterUserForm(UserCreationForm):
         )
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-item__text'}))
     password2 = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput(attrs={'class': 'form-item__text'}))
-
+    is_accepted = forms.BooleanField(initial=False, label="Согласие на обработку персональных данных", widget=forms.CheckboxInput(attrs={'class': 'form-item__text'}))
+    
     class Meta:
         model = get_user_model()
-        fields = ['username', 'password1', 'password2', 'first_name']
+        fields = ['username', 'password1', 'password2', 'first_name', 'is_accepted']
         labels ={
             'first_name': 'Ваше имя',
             'phone': 'Номер телефона',

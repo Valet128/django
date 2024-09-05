@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse, reverse_lazy
 
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -16,17 +17,20 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product', kwargs={'id': self.id})
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
+
 class Interaction(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class Slide(models.Model):
     name = models.CharField(max_length=255)
@@ -35,6 +39,7 @@ class Slide(models.Model):
     def __str__(self):
         return self.name
 
+
 class Feedback(models.Model):
     name = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='feedbacks')
@@ -42,16 +47,14 @@ class Feedback(models.Model):
     def __str__(self):
         return self.name
 
+
 class Order(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=0)
     date = models.DateTimeField()
     customer_name = models.CharField(max_length=100)
     customer_email = models.EmailField()
     customer_phone = models.CharField(max_length=25)
-    product = models.ForeignKey('Product', on_delete=models.PROTECT)
-    payment = models.ForeignKey('Payment', on_delete=models.PROTECT)
-    
-
-class Payment(models.Model):
+    product = models.CharField(max_length=255)
     token = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
+

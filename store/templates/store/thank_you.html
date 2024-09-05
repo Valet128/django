@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+<div class="description">
+    <div class="container">
+        <div class="description__body">
+            <div class="description__title title">Спасибо за покупку!</div>
+            <a href="{% url 'home' %}" class="btn__link">Вернуться на главную страницу</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
