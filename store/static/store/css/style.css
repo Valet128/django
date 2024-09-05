@@ -70,6 +70,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: inherit;
   font-weight: 400;
 }
+@font-face{
+  font-family: montserrat-semibold;
+  src: url('../fonts/montserrat/Montserrat-SemiBold.ttf');
+}
 
 .header {
   position: fixed;
@@ -109,6 +113,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   z-index: 2;
 }
+
 .header__list li {
   font-family: montserrat-semibold;
   color: #000;
