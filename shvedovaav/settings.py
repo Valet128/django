@@ -160,4 +160,27 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGGING = {
+    'version': 1,
+    'formatters':{ 'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['error_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}
+
 # django.contrib.auth.base_user.py - изменил метод get_email_field_name - для возможности восстановления пароля с юзер неймом в виде email
