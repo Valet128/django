@@ -58,3 +58,5 @@ class Order(models.Model):
     token = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.token

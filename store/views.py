@@ -64,11 +64,16 @@ class StorePlacingAnOrder(DataMixin, FormView, DetailView):
                         "type": "redirect",
                         "return_url": "https://shvedovaav.ru/thank_you/",
                     },
+                    "metadata":{
+                        "name": form.data['customer_name'],
+                        "email": form.data['customer_email'],
+                        "phone": form.data['customer_phone'],
+                        "product_name": form.data['product_name'],
+                    },
                     "receipt": {
                         "customer": {
                             "email": form.data['customer_email'],
                             "phone": form.data['customer_phone'],
-                            "full_name": form.data['customer_name'],
                         },
                         "items": [ 
                             {
@@ -128,10 +133,10 @@ def payment_result(request):
             order = Order(
                 amount = payment.amount.value,
                 date = payment.created_at,
-                customer_name = payment.metadata['full_name'],
+                customer_name = payment.metadata['name'],
                 customer_email = payment.metadata['email'],
                 customer_phone = payment.metadata['phone'],
-                product = payment.description,
+                product = payment.metadata['product_name'],
                 token = payment.id,
                 status = payment.status
             )

@@ -26,3 +26,8 @@ class SlideAdmin(admin.ModelAdmin):
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer_email', 'token')
+    list_display_links = ('id', 'customer_email', 'token')
