@@ -28,14 +28,12 @@
         </div>
     </div>
 <!-- @*PRODUCT_ITEMS*@ -->
-  
 
 <div id="courses"></div>
     <div class="product">
-        <div class="container">
+        <div class="container" id="container">
             <div class="product__row" id="row">
-            {% if product|length <= 3 %}
-                {% for product in products %}
+                {% for product in products %}                
                         <div class="product__column">
                             <div class="product__item">
                                 <div class="product__img">
@@ -45,52 +43,17 @@
                                     <p>{{ product.name }}</p>
                                 </div>
                                 <div class="product__price">
+                                {% if product.category.name == "Конференция"%}
+                                    <p>Бесплатно</p>
+                                {% else %}
                                     <p>{{ product.price }} ₽</p>
-                                </div>
-                                    
-                                <div class="product__date">
-                                    {% if product.interaction.name ==  "Запись" %}
-                                    
-                                        <p></p>
-                                    
-                                    {% else %}
-                                    
-                                        <p>{{ product.date }}</p>
-                                    {% endif %}
-                                </div>
-                                    
-                                <div class="product-btn"> 
-                                    <div class="product-btn__row"> 
-                                        <div class="product-btn__column"> 
-                                            <a class="btn__link product-btn__link" href="{{ product.get_absolute_url }}">Подробнее...</a>
-                                        </div>
-                                        <div class="product-btn__column"> 
-                                            <a class="btn__link product-btn__link" href="{% url 'placing_an_order' product.id %}">Купить</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                                </div>
-                {% endfor %}
-            {% else %}
-                
-                {% for product in products %}
-                                <div class="product__column">
-                            <div class="product__item">
-                                <div class="product__img">
-                                    <img src="{% get_media_prefix %}{{ product.image }}"/>
-                                </div>
-                                <div class="product__title">
-                                    <p>{{ product.name }}</p>
-                                </div>
-                                <div class="product__price">
-                                    <p>{{ product.price }} ₽</p>
+                                {% endif %}  
                                 </div>
                                 <div class="product__date">
-                                    {% if product.interaction.name ==  "Запись" %}
-                                        <p></p>
+                                    {% if product.interaction.name ==  "Запись" or product.date == None %}
+                                    <p></p>
                                     {% else %}
-                                        <p>{{ product.date }}</p>
+                                    <p>{{ product.date }}</p>
                                     {% endif %}
                                 </div>
                                 <div class="product-btn"> 
@@ -99,23 +62,55 @@
                                             <a class="btn__link product-btn__link" href="{{ product.get_absolute_url }}">Подробнее...</a>
                                         </div>
                                         <div class="product-btn__column"> 
+                                            {% if product.category.name == "Конференция"%}
+                                            <a class="btn__link product-btn__link" href="{% url 'free_event' product.id %}">Записаться</a>
+                                            {% else %}
                                             <a class="btn__link product-btn__link" href="{% url 'placing_an_order' product.id %}">Купить</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                </div>
-                
+                        </div>
                 {% endfor %}
+        
+                
             
-            </div>
-            <div class="product-more">
-                <a class="btn__link" id="product-more">Еще</a>
-            </div>
-            {% endif %}
-        </div> 
+        </div>
+        <script>
+            const MEDIA_URL = "{% get_media_prefix %}"
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get_products");
+            xhr.onload = () => {
+            if (xhr.status == 200) 
+            {
+                const products = JSON.parse(xhr.responseText);
+                var children = document.getElementById("row").children.length;
+                if (products.length > 3) 
+                {
+                    const row = document.getElementById("container");
+                    var htmlText = `
+                    <div class="product-more">
+                    <a class="btn__link" id="product-more">Еще</a>
+                    </div>
+                    `;
+                    row.innerHTML += htmlText;
+                }
+            }
+            else 
+                { 
+                    console.log("Server response: ", xhr.statusText); 
+                }
+            }
+            xhr.send();
+        </script>
+        
+        
+        
     </div> 
+    
    
+    
 
     <!-- @*DESCRIPTION*@ -->
 

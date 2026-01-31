@@ -29,5 +29,5 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer_email', 'token')
+    list_display = ('id', 'customer_email', 'date', 'token')
     list_display_links = ('id', 'customer_email', 'token')

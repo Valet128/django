@@ -5,6 +5,7 @@ from django.urls import reverse, reverse_lazy
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    link = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=0)
     date = models.DateTimeField(blank=True, null=True)
     image = models.ImageField(upload_to='products')
@@ -16,6 +17,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product', kwargs={'id': self.id})
+    
 
 
 class Category(models.Model):
@@ -57,6 +59,7 @@ class Order(models.Model):
     product = models.CharField(max_length=255)
     token = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
+    address = models.CharField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return self.token

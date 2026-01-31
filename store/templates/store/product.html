@@ -20,7 +20,7 @@
                 <pre>{{ product.description }}</pre>
                 </div>
                  <div class="product-description__date">
-                    {% if product.interaction.name ==  "Запись" %}
+                    {% if product.interaction.name ==  "Запись" or product.date == None %}
                     <p></p>
                     {% else %}
                     <p>{{ product.date }}</p>
@@ -28,12 +28,19 @@
                         </div>
                <div class="product-description__price-btn">
                 <div class="product-description__price">
-                     <p>{{ product.price }} ₽</p>
+                     {% if product.category.name == "Конференция"%}
+                        <p>Бесплатно</p>
+                    {% else %}
+                        <p>{{ product.price }} ₽</p>
+                    {% endif %}  
                 </div> 
                 <div class="product-description__btn">
-                            <a href="{% url 'placing_an_order' product.id %}">
-                                 <input class="btn__input" type="button"  value="Купить"/>
-                            </a>
+                    {% if product.category.name == "Конференция"%}
+                    <a class="btn__link product-btn__link" href="{% url 'free_event' product.id %}">Записаться</a>
+                    {% else %}
+                    <a class="btn__link product-btn__link" href="{% url 'placing_an_order' product.id %}">Купить</a>
+                    {% endif %}
+                            
                 </div>
                 </div>
          </div>

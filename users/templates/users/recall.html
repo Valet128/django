@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %} Логин {% endblock %}
+{% block title %} {{ title }} {% endblock %}
 
 {% block content %}
 <div class="form">
     <div class="container">
-        <div class="form__title">Вход</div>
+        <div class="form__title">Подтвердите удаление данных</div>
         <div class="form__body">
+            <p>При отказе от дальнейшей обработки данных все данные будут удалены с сайта.</p>
             <form method="post">
                 {% csrf_token %}
                 <div class="form__item">{{ form.non_field_errors}}</div>
@@ -18,15 +20,15 @@
                 {% endfor %}
 
                 <div class="form__item">
-                    <input class="btn__input" type="submit" value="Войти" />
+                    <input class="btn__input" type="submit" value="Подтвердить" />
                 </div>
             </form>
-            <a href="{% url 'users:password_reset' %}" class="btn__link">Забыли пароль?</a>
-
-            
+            <br>
+            <a href="{% url 'users:profile' %}" class="btn__link">Отмена</a>
 
         </div>
     </div>
 
 </div>
+
 {% endblock %}

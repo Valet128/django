@@ -73,14 +73,16 @@
         }
     });
     //MORE
-    $('#product-more').click(function (event) {
-        
+
+    $('#container').click(function(event) {
+        if (event.target.id === 'product-more'){
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "/home/indexelem");
+        xhr.open("GET", "/get_products");
         xhr.onload = () => {
             if (xhr.status == 200) {
                 
                 const products = JSON.parse(xhr.responseText);
+                
                 var children = document.getElementById("row").children.length;
                 if (children < products.length) {
                     var allLength = products.length - children;
@@ -96,65 +98,62 @@
                     const row = document.getElementById("row");
                     var htmlText = ``;
                     for (var i = children; i < children + adderLength; i++) {
-                        if (products[i].category == "Прошедшие(Запись)")
-                        { 
-                            htmlText += `<div class="product__column">
-                    <div class="product__item">
-                        <div class="product__img">
-                            <img src="${products[i].image}"/>
-                        </div>
-                        <div class="product__title">
-                            <p>${products[i].name}</p>
-                        </div>
-                        <div class="product__price">
-                            <p>${products[i].price} ₽</p>
-                        </div>
-                        <div class="product__date">
-                            <p></p>      
-                        </div>
-                        <div class="product-btn"> 
-                            <div class="product-btn__row"> 
-                                <div class="product-btn__column"> 
-                                    <a class="btn__link" href="home/product/${products[i].id}">Подробнее...</a>
-                                </div>
-                                <div class="product-btn__column">
-                                    <a class="btn__link" href="home/buyproduct/${products[i].id}">Купить</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        </div>`;
-                    }
-                            else
-                    {
+                        let category = ''
+                        let href = ''
+                        let date = ''
+                        let btn_value = ''
+                        let options = {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric'
+                            };
+                        if (products[i].fields.category === 3){
+                            category += 'Бесплатно'
+                            href += `free_event/${products[i].pk}/`
+                            btn_value += 'Записаться'
+                        }
+                        else {
+                            category += products[i].fields.price + '₽'
+                            href = `placing_an_order/${products[i].pk}/`
+                            btn_value += 'Купить'
+                        }
+                        
+                        if (products[i].fields.interaction.name === "Запись" || products[i].fields.date === null){
+                            date = ''
+                        }
+                        else
+                        {
+                            date =  new Intl.DateTimeFormat('ru-RU', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}).format(new Date(products[i].fields.date))
+                        }
                         htmlText += `<div class="product__column">
-                    <div class="product__item">
-                        <div class="product__img">
-                            <img src="${products[i].image}"/>
-                        </div>
-                        <div class="product__title">
-                            <p>${products[i].name}</p>
-                        </div>
-                        <div class="product__price">
-                            <p>${products[i].price} ₽</p>
-                        </div>
-                        <div class="product__date">
-                            <p>${products[i].dateAndTime}</p>      
-                        </div>
-                        <div class="product-btn"> 
-                            <div class="product-btn__row"> 
-                                <div class="product-btn__column"> 
-                                    <a class="btn__link" href="home/product/${products[i].id}">Подробнее...</a>
+                            <div class="product__item">
+                                <div class="product__img">
+                                    <img src="${MEDIA_URL}${products[i].fields.image}"/>
                                 </div>
-                                <div class="product-btn__column">
-                                    <a class="btn__link" href="home/buyproduct/${products[i].id}">Купить</a>
+                                <div class="product__title">
+                                    <p>${products[i].fields.name}</p>
+                                </div>
+                                <div class="product__price">
+                                 <p>${category}</p>
+                                </div>
+                                <div class="product__date">
+                                    <p>${date}</p>
+                                </div>
+                                <div class="product-btn"> 
+                                    <div class="product-btn__row"> 
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="product/${products[i].pk}/">Подробнее...</a>
+                                        </div>
+                                        <div class="product-btn__column"> 
+                                            <a class="btn__link product-btn__link" href="${href}">${btn_value}</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                         </div>`;
-                    }
-                   
 
 
                     }
@@ -167,7 +166,10 @@
 
         }
         xhr.send();
+    }
+    else {console.log('NOTHINg')}
     });
+    
    
     if ($('#select-content').val() == "Новый")
     {
