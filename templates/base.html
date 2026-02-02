@@ -1,4 +1,5 @@
 {% load static %}
+{% load recaptcha3 %}
 <!DOCTYPE html>
 
 <html>
@@ -17,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}" />
     <script src="{% static 'store/swipe/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'store/js/style.js' %}"></script>
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
     <title>{% block title %} {% endblock %}</title>
 </head>
 

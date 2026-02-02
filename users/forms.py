@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import get_user_model, password_validation
 import uuid
+from snowpenguin.django.recaptcha3.fields import ReCaptchaField
 
 User = get_user_model()
 
@@ -31,6 +32,8 @@ class CourseCustomUserCreationForm(UserCreationForm):
     widget=forms.HiddenInput(attrs={'class': 'label-none', 'placeholder': 'Подтверждение пароля'}),
     initial=password
     )
+    
+    captcha = ReCaptchaField(score_threshold=0.5, label='')
 
     class Meta:
         model = User
@@ -91,6 +94,8 @@ class BookCustomUserCreationForm(UserCreationForm):
     initial=password
     )
 
+    captcha = ReCaptchaField(score_threshold=0.5, label='')
+
     class Meta:
         model = User
         fields = ('email', )
@@ -123,6 +128,9 @@ class FreeEventCustomUserCreationForm(UserCreationForm):
     widget=forms.HiddenInput(attrs={'class': 'label-none', 'placeholder': 'Подтверждение пароля'}),
     initial=password
     )
+
+    captcha = ReCaptchaField(score_threshold=0.5, label='')
+
 
     class Meta:
         model = User

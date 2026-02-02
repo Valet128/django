@@ -3,6 +3,7 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block content %}
+
 <div class="form">
     <div class="container">
     <div class="form__title">Оформление заказа</div>
@@ -29,6 +30,7 @@
                 <p> Я принимаю условия <a href="{% url 'terms_of_use' %}">Публичной оферты</a> </p>
                 <br />
                 {{ field }} {{field.errors}}
+                
                 {% elif field.name == 'password1' or field.name == 'password2' %}
                 {{ field }} {{field.errors}}
                 {% else %}
@@ -36,8 +38,8 @@
                 {{ field }} {{field.errors}}
                 {% endif %}
                 </div>
+                
             {% endfor %}
-            
             <div class="form__item">
             <input class="btn__input" type="submit" value="Оплатить"/>
             </div>
@@ -47,4 +49,5 @@
     </div>
     
     </div>
+
 {% endblock %}

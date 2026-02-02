@@ -1,4 +1,6 @@
 from datetime import datetime
+from django.conf import settings
+import requests
 
 class DataMixin():
     extra_context = {}

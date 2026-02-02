@@ -7,7 +7,7 @@ from .utils import DataMixin
 import uuid
 from shvedovaav.settings import SHOP_ID, API_SECRET
 import json
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from yookassa.domain.notification import WebhookNotification
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt
@@ -179,7 +179,6 @@ class StorePlacingAnOrder(DataMixin, CreateView, DetailView):
             user.personal_data_accepted = form.cleaned_data['personal_data_accepted']
             user.send_messages_accepted = form.cleaned_data['send_messages_accepted']
             user.users_agreement_accepted = form.cleaned_data['users_agreement_accepted']
-           
             form.save()
 
             title_message = 'Регистрация'
@@ -372,7 +371,6 @@ class StorePlacingAnOrder(DataMixin, CreateView, DetailView):
                     idempotence_key)
             confirmation_url = payment.confirmation.confirmation_url
             return redirect(confirmation_url)
-  
 
         
 
